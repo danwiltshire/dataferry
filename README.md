@@ -10,7 +10,7 @@ destination database.
 > service to untrusted networks or use it to manage production databases
 > unless you add appropriate authentication and access controls.
 
-<video src="docs/video/dataferry_readme_demo.mp4" controls style="width: 100%; max-width: 960px;"></video>
+<video src="https://github.com/danwiltshire/dataferry/raw/refs/heads/main/docs/video/dataferry_readme_demo.mp4" controls style="width: 100%; max-width: 960px;"></video>
 
 ## Architecture
 
