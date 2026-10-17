@@ -10,7 +10,7 @@ destination database.
 > service to untrusted networks or use it to manage production databases
 > unless you add appropriate authentication and access controls.
 
-<video width="630" height="300" src="https://github.com/user-attachments/assets/55c71a5a-000e-4a99-b299-e8657e85b76c"></video>
+https://github.com/user-attachments/assets/55c71a5a-000e-4a99-b299-e8657e85b76c
 
 ## Architecture
 
