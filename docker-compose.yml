@@ -1,0 +1,53 @@
+services:
+  frontend:
+    build: ./frontend
+    depends_on:
+      - server
+    environment:
+      # Fetched directly from the browser, so this must be reachable from
+      # wherever you open the frontend, not just in-network.
+      - API_BASE_URL=http://localhost:${SERVER_PORT:-8000}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+
+  agent:
+    build: .
+    depends_on:
+      - server
+    environment:
+      # Obtain these by calling `POST /admin/agents` on the server first.
+      - AGENT_CLIENT_ID=${AGENT_CLIENT_ID}
+      - AGENT_CLIENT_SECRET=${AGENT_CLIENT_SECRET}
+      - ORCHESTRATOR_URL=http://server:${SERVER_PORT:-8000}
+    entrypoint: ["/usr/bin/tini", "--", "python", "-m", "dataferry.agent"]
+
+  server:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=example
+      - DATABASE_NAME=dataferry
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-change-me}
+    ports:
+      - "${SERVER_PORT:-8000}:${SERVER_PORT:-8000}"
+    entrypoint: ["/usr/bin/tini", "--", "sh", "-c", "alembic upgrade head && python -m uvicorn dataferry.server:app --host 0.0.0.0 --port ${SERVER_PORT:-8000}"]
+
+  db:
+    image: postgres:18-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: dataferry
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s

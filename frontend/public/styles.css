@@ -1,0 +1,44 @@
+/* dataferry – supplementary styles (Tailwind handles the bulk via CDN) */
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  font-variation-settings: "CTGR" 0, "wdth" 100;
+}
+
+/* Collapsible sidebar nav sections */
+.collapsible-content {
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.2s ease;
+}
+
+.collapsible-content > * {
+  min-height: 0;
+}
+
+.collapsible-content.collapsed {
+  grid-template-rows: 0fr;
+}
+
+/* Custom scrollbar to match the dark theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #525252;
+}

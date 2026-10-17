@@ -1,0 +1,28 @@
+[project]
+name = "dataferry"
+version = "0.1.0"
+description = "Ferry MySQL and PostgreSQL databases around."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "alembic>=1.20.0",
+    "authlib>=1.8.0",
+    "bcrypt>=5.0.0",
+    "boto3>=1.43.56",
+    "fastapi[standard]>=0.141.1",
+    "psycopg[binary,pool]>=3.3.6",
+    "pydantic-settings>=2.15.0",
+    "sqlalchemy[asyncio]>=2.1.1",
+    "tenacity>=9.1.4",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.0",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = ["."]
